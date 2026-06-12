@@ -304,10 +304,8 @@ ul, ol { list-style: none; }
   display: block;
   pointer-events: none;
 }
-@media (prefers-reduced-motion: reduce) {
-  .weldline canvas { display: none; }
-  .weldline.is-live::after { display: block; }
-}
+/* under reduced motion the canvas stays: the weld only moves with the
+   user's own scroll; sparks/flicker are disabled in JS instead */
 
 /* --------------------------------------------------------------------------
    Frames (full-viewport sections)

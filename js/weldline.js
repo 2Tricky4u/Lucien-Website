@@ -9,7 +9,10 @@
 (function () {
   "use strict";
 
+  var REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
   function WeldLine(el) {
+    this.reduced = REDUCED;
     this.el = el;
     this.canvas = el.querySelector("canvas");
     this.ctx = this.canvas.getContext("2d");
@@ -80,6 +83,17 @@
 
   WeldLine.prototype.setTarget = function (p) {
     this.target = Math.max(0, Math.min(1, p));
+    this.external = true; // a scroll library is driving us
+  };
+
+  // self-driving fallback: progress from our own viewport position,
+  // so the weld works even if no scroll library calls setTarget()
+  WeldLine.prototype.updateTargetFromRect = function () {
+    if (this.external) return;
+    var vh = window.innerHeight || 1;
+    var top = this.el.getBoundingClientRect().top;
+    var raw = (vh * 0.85 - top) / (vh * 0.45);
+    this.target = Math.max(0, Math.min(1, raw));
   };
 
   WeldLine.prototype.spawn = function (x, y, strength) {
@@ -132,22 +146,25 @@
     var c = this.ctx, w = this.w, h = this.h;
     var y = h / 2;
 
+    this.updateTargetFromRect();
     var prev = this.current;
     this.current += (this.target - this.current) * 0.16;
     if (Math.abs(this.target - this.current) < 0.0005) this.current = this.target;
     var tx = this.current * w;
     var welding = this.current > 0.004 && this.current < 0.997;
 
-    // sparks scale with welding speed
+    // sparks scale with welding speed; they only fly while the user
+    // actively scrolls, so they run under reduced motion too. The idle
+    // crackle is autonomous, so it stays gated.
     var dx = (this.current - prev) * w;
     if (dx > 0.05) {
       this.sparkAccum += dx;
       while (this.sparkAccum > 7) {
-        this.spawn(tx - Math.random() * Math.min(dx, 22), y, 1);
+        // spread spawns along the distance swept this frame, not in clumps
+        this.spawn(tx - Math.random() * dx, y, 1);
         this.sparkAccum -= 7;
       }
-    } else if (welding) {
-      // arc paused mid-seam: it still crackles gently
+    } else if (welding && !this.reduced) {
       if (++this.idleSparkT > 14) {
         this.idleSparkT = 0;
         if (Math.random() < 0.7) this.spawn(tx, y, 0.55);
@@ -167,7 +184,7 @@
 
     // the arc: white-hot core, flickering halo — lit whenever mid-seam
     if (welding) {
-      var fl = 12 + Math.random() * 3.5;
+      var fl = this.reduced ? 12 : 12 + Math.random() * 3.5;
       var ag = c.createRadialGradient(tx, y, 0, tx, y, fl);
       ag.addColorStop(0, "rgba(255, 255, 255, 1)");
       ag.addColorStop(0.18, "rgba(215, 232, 255, 0.85)");
@@ -203,4 +220,18 @@
   };
 
   window.WeldLine = WeldLine;
+
+  // auto-init: each divider drives itself. Runs under reduced motion too —
+  // the weld is scroll-coupled (only moves with the user's own scrolling);
+  // autonomous sparks/flicker are disabled above instead.
+  var boot = function () {
+    document.querySelectorAll("[data-weldline]").forEach(function (el) {
+      if (!el.weldline) el.weldline = new WeldLine(el);
+    });
+  };
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
+  }
 })();

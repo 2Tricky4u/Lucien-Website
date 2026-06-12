@@ -103,8 +103,10 @@
     });
   }
 
-  /* ---------------- GSAP scroll frames ---------------- */
-  if (!window.gsap || REDUCED) return;
+  /* ---------------- GSAP scroll frames ----------------
+     Runs under reduced motion too: every effect below is scroll-coupled
+     (scrub) or a one-shot reveal; autonomous particles stay gated. */
+  if (!window.gsap) return;
   gsap.registerPlugin(ScrollTrigger);
   if (lenis) lenis.on("scroll", ScrollTrigger.update);
 
@@ -180,19 +182,7 @@
     });
   }
 
-  // Weld seam dividers: the arc chases the scroll target (fast + smooth)
-  document.querySelectorAll("[data-weldline]").forEach(function (el) {
-    if (!window.WeldLine) return;
-    var wl = new WeldLine(el);
-    ScrollTrigger.create({
-      trigger: el,
-      start: "top 82%",
-      end: "top 42%",
-      scrub: true,
-      onUpdate: function (self) { wl.setTarget(self.progress); },
-      onRefresh: function (self) { wl.setTarget(self.progress); }
-    });
-  });
+  // Weld seam dividers are self-driving (see weldline.js auto-init)
 
   // Atelier portrait slight parallax
   gsap.fromTo(".atelier__portrait", { y: 50 }, {

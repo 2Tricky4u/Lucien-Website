@@ -71,7 +71,18 @@ ul, ol { list-style: none; }
   filter: drop-shadow(0 0 6px rgba(255, 122, 26, 0.35));
 }
 .swiss-inline { color: var(--or-fondu); white-space: nowrap; }
-.cartouche-swiss { color: var(--or-fondu); }
+
+/* Croy village emblem, kept quiet to sit in the dark footer */
+.croy-inline { white-space: nowrap; }
+.croymark {
+  display: inline-block;
+  width: 1.1em; height: 1.1em;
+  vertical-align: -0.22em;
+  margin-right: 0.4em;
+  border-radius: 2px;
+  filter: saturate(0.85) brightness(0.95);
+  box-shadow: 0 0 0 1px rgba(139, 143, 150, 0.3), 0 2px 8px rgba(0, 0, 0, 0.5);
+}
 
 /* Hot hairline divider */
 .hotline {

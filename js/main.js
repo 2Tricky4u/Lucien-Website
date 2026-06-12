@@ -103,8 +103,10 @@
     });
   }
 
-  /* ---------------- GSAP scroll frames ---------------- */
-  if (!window.gsap || REDUCED) return;
+  /* ---------------- GSAP scroll frames ----------------
+     Runs under reduced motion too: every effect below is scroll-coupled
+     (scrub) or a one-shot reveal; autonomous particles stay gated. */
+  if (!window.gsap) return;
   gsap.registerPlugin(ScrollTrigger);
   if (lenis) lenis.on("scroll", ScrollTrigger.update);
 
@@ -179,6 +181,8 @@
       }
     });
   }
+
+  // Weld seam dividers are self-driving (see weldline.js auto-init)
 
   // Atelier portrait slight parallax
   gsap.fromTo(".atelier__portrait", { y: 50 }, {

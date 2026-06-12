@@ -186,8 +186,8 @@
     var wl = new WeldLine(el);
     ScrollTrigger.create({
       trigger: el,
-      start: "top 88%",
-      end: "top 38%",
+      start: "top 82%",
+      end: "top 42%",
       scrub: true,
       onUpdate: function (self) { wl.setTarget(self.progress); },
       onRefresh: function (self) { wl.setTarget(self.progress); }

@@ -1,8 +1,9 @@
 /* ==========================================================================
    weldline.js — scroll-driven weld seam divider
-   A refined TIG seam: thin metallic bead with stack-of-dimes ripples and
-   subtle heat tint. The arc point chases the scroll target with easing,
-   so it sweeps fast and smooth. Scroll back up and the seam rewinds.
+   Reference look: stainless TIG seam — a delicate bead built from
+   overlapping molten puddles, so its edges scallop naturally (no straight
+   borders), with faint gold/blue heat tint. The arc chases the scroll
+   target with easing and throws visible sparks while it welds.
    ========================================================================== */
 
 (function () {
@@ -12,15 +13,17 @@
     this.el = el;
     this.canvas = el.querySelector("canvas");
     this.ctx = this.canvas.getContext("2d");
-    this.target = 0;     // where the scroll wants the torch
-    this.current = 0;    // where the torch actually is (eased)
+    this.target = 0;
+    this.current = 0;
     this.sparkAccum = 0;
+    this.idleSparkT = 0;
     this.sparks = [];
     this.active = false;
     this.dpr = Math.min(window.devicePixelRatio || 1, 2);
     this.resize = this.resize.bind(this);
     this.tick = this.tick.bind(this);
     window.addEventListener("resize", this.resize);
+    this.makeStamp();
     this.resize();
     el.classList.add("is-live");
 
@@ -39,6 +42,33 @@
     }
   }
 
+  // one molten puddle, pre-rendered: light crown, darker trailing crescent
+  WeldLine.prototype.makeStamp = function () {
+    var D = 4;                       // logical puddle diameter (slim seam)
+    var res = 8;                     // oversampled for crispness
+    var s = document.createElement("canvas");
+    s.width = s.height = D * res;
+    var x = s.getContext("2d");
+    var cx = (D * res) / 2, r = (D * res) / 2 - res * 0.2;
+    var g = x.createRadialGradient(cx - r * 0.35, cx - r * 0.4, r * 0.1, cx, cx, r);
+    g.addColorStop(0, "rgba(240, 243, 248, 0.95)");
+    g.addColorStop(0.5, "rgba(168, 173, 180, 0.92)");
+    g.addColorStop(0.82, "rgba(98, 102, 108, 0.9)");
+    g.addColorStop(1, "rgba(55, 58, 63, 0.85)");
+    x.fillStyle = g;
+    x.beginPath();
+    x.arc(cx, cx, r, 0, Math.PI * 2);
+    x.fill();
+    // trailing crescent shadow on the right edge of each puddle
+    x.strokeStyle = "rgba(30, 32, 36, 0.5)";
+    x.lineWidth = res * 0.55;
+    x.beginPath();
+    x.arc(cx, cx, r * 0.82, -0.95, 0.95);
+    x.stroke();
+    this.stamp = s;
+    this.stampD = D;
+  };
+
   WeldLine.prototype.resize = function () {
     var r = this.el.getBoundingClientRect();
     this.w = Math.max(r.width, 1);
@@ -52,74 +82,48 @@
     this.target = Math.max(0, Math.min(1, p));
   };
 
-  WeldLine.prototype.spawn = function (x, y) {
-    var n = 1 + Math.floor(Math.random() * 2);
+  WeldLine.prototype.spawn = function (x, y, strength) {
+    var n = 2 + Math.floor(Math.random() * 3);
     for (var i = 0; i < n; i++) {
-      var a = -Math.PI / 2 + (Math.random() - 0.5) * 1.5;
-      var s = 0.8 + Math.random() * 1.9;
+      var a = -Math.PI / 2 + (Math.random() - 0.5) * 1.6;
+      var s = (1.4 + Math.random() * 2.8) * (strength || 1);
       this.sparks.push({
         x: x, y: y,
-        vx: Math.cos(a) * s + 0.35,
+        vx: Math.cos(a) * s + 0.4,
         vy: Math.sin(a) * s,
         l: 1,
-        d: 0.035 + Math.random() * 0.045
+        d: 0.02 + Math.random() * 0.035
       });
     }
   };
 
   WeldLine.prototype.drawBead = function (tx) {
     var c = this.ctx, y = this.h / 2;
+    var D = this.stampD, half = D / 2;
 
-    // permanent faint heat tint along the seam (gold close, blue further)
-    var tintEnd = Math.max(0, tx - 4);
+    // faint heat tint hugging the seam: gold close, hint of blue beyond
+    var tintEnd = Math.max(0, tx - 3);
     if (tintEnd > 2) {
-      c.fillStyle = "rgba(255, 170, 80, 0.05)";
-      c.fillRect(0, y - 6.5, tintEnd, 13);
-      c.fillStyle = "rgba(110, 150, 235, 0.035)";
-      c.fillRect(0, y - 10, tintEnd, 3);
-      c.fillRect(0, y + 7, tintEnd, 3);
+      c.fillStyle = "rgba(255, 170, 80, 0.06)";
+      c.fillRect(0, y - 3.5, tintEnd, 7);
+      c.fillStyle = "rgba(110, 150, 235, 0.03)";
+      c.fillRect(0, y - 5.5, tintEnd, 2);
+      c.fillRect(0, y + 3.5, tintEnd, 2);
     }
 
-    // bead body: slim metallic capsule
-    var g = c.createLinearGradient(0, y - 3.5, 0, y + 3.5);
-    g.addColorStop(0, "rgba(140, 144, 150, 0.50)");
-    g.addColorStop(0.32, "rgba(226, 229, 234, 0.72)");
-    g.addColorStop(0.66, "rgba(118, 122, 128, 0.55)");
-    g.addColorStop(1, "rgba(58, 60, 64, 0.50)");
-    c.fillStyle = g;
-    c.beginPath();
-    c.moveTo(0, y - 3.5);
-    c.lineTo(Math.max(0, tx - 3.5), y - 3.5);
-    c.arc(Math.max(0, tx - 3.5), y, 3.5, -Math.PI / 2, Math.PI / 2);
-    c.lineTo(0, y + 3.5);
-    c.closePath();
-    c.fill();
-
-    // stack-of-dimes ripples: fine crescents leaning back from the torch
-    c.strokeStyle = "rgba(38, 40, 44, 0.45)";
-    c.lineWidth = 1;
-    for (var x = 3; x < tx - 6; x += 4.2) {
-      c.beginPath();
-      c.arc(x, y, 3, -1.08, 1.08);
-      c.stroke();
+    // the bead: overlapping puddles → scalloped edges, stack-of-dimes ripple
+    for (var x = half; x < tx - half; x += 1.8) {
+      c.drawImage(this.stamp, x - half, y - half, D, D);
     }
 
-    // crisp top highlight: polished crown of the bead
-    c.strokeStyle = "rgba(255, 255, 255, 0.26)";
-    c.lineWidth = 0.8;
-    c.beginPath();
-    c.moveTo(1, y - 2.1);
-    c.lineTo(Math.max(1, tx - 4), y - 2.1);
-    c.stroke();
-
-    // fresh weld: warm fade on the last stretch behind the arc
-    var hot = Math.min(90, tx);
+    // fresh stretch behind the arc still glows warm
+    var hot = Math.min(70, tx);
     if (hot > 4) {
       var hg = c.createLinearGradient(tx - hot, 0, tx, 0);
       hg.addColorStop(0, "rgba(255, 150, 60, 0)");
-      hg.addColorStop(1, "rgba(255, 165, 75, 0.32)");
+      hg.addColorStop(1, "rgba(255, 170, 80, 0.4)");
       c.fillStyle = hg;
-      c.fillRect(tx - hot, y - 3.5, hot, 7);
+      c.fillRect(tx - hot, y - half, hot, D);
     }
   };
 
@@ -128,27 +132,31 @@
     var c = this.ctx, w = this.w, h = this.h;
     var y = h / 2;
 
-    // chase the scroll target: fast, smooth, settles cleanly
     var prev = this.current;
     this.current += (this.target - this.current) * 0.16;
     if (Math.abs(this.target - this.current) < 0.0005) this.current = this.target;
     var tx = this.current * w;
+    var welding = this.current > 0.004 && this.current < 0.997;
 
-    // sparks only while welding forward
+    // sparks scale with welding speed
     var dx = (this.current - prev) * w;
-    if (dx > 0) {
+    if (dx > 0.05) {
       this.sparkAccum += dx;
-      while (this.sparkAccum > 10) {
-        this.spawn(tx - Math.random() * Math.min(dx, 26), y);
-        this.sparkAccum -= 10;
+      while (this.sparkAccum > 7) {
+        this.spawn(tx - Math.random() * Math.min(dx, 22), y, 1);
+        this.sparkAccum -= 7;
       }
-    } else {
-      this.sparkAccum = 0;
+    } else if (welding) {
+      // arc paused mid-seam: it still crackles gently
+      if (++this.idleSparkT > 14) {
+        this.idleSparkT = 0;
+        if (Math.random() < 0.7) this.spawn(tx, y, 0.55);
+      }
     }
 
     c.clearRect(0, 0, w, h);
 
-    // open joint ahead: a fine machined groove
+    // open joint ahead: fine machined groove
     c.strokeStyle = "rgba(10, 10, 12, 0.8)";
     c.lineWidth = 1;
     c.beginPath(); c.moveTo(tx, y); c.lineTo(w, y); c.stroke();
@@ -157,31 +165,36 @@
 
     if (tx > 1) this.drawBead(tx);
 
-    // TIG arc: small, white-blue, intense
-    if (tx > 0.5 && Math.abs(this.target - this.current) > 0.0004) {
-      var ag = c.createRadialGradient(tx, y, 0, tx, y, 10);
-      ag.addColorStop(0, "rgba(255, 255, 255, 0.95)");
-      ag.addColorStop(0.22, "rgba(208, 228, 255, 0.75)");
-      ag.addColorStop(0.55, "rgba(255, 195, 115, 0.28)");
+    // the arc: white-hot core, flickering halo — lit whenever mid-seam
+    if (welding) {
+      var fl = 12 + Math.random() * 3.5;
+      var ag = c.createRadialGradient(tx, y, 0, tx, y, fl);
+      ag.addColorStop(0, "rgba(255, 255, 255, 1)");
+      ag.addColorStop(0.18, "rgba(215, 232, 255, 0.85)");
+      ag.addColorStop(0.45, "rgba(255, 200, 120, 0.4)");
       ag.addColorStop(1, "rgba(255, 140, 50, 0)");
       c.fillStyle = ag;
       c.beginPath();
-      c.arc(tx, y, 10, 0, Math.PI * 2);
+      c.arc(tx, y, fl, 0, Math.PI * 2);
+      c.fill();
+      c.fillStyle = "rgba(255, 255, 252, 0.95)";
+      c.beginPath();
+      c.arc(tx, y, 2.2, 0, Math.PI * 2);
       c.fill();
     }
 
-    // fine sparks
+    // sparks: bright, with real trails
     for (var i = this.sparks.length - 1; i >= 0; i--) {
       var p = this.sparks[i];
       p.x += p.vx;
       p.y += p.vy;
-      p.vy += 0.09;
+      p.vy += 0.085;
       p.l -= p.d;
       if (p.l <= 0 || p.y > h + 8) { this.sparks.splice(i, 1); continue; }
-      c.strokeStyle = "rgba(255, " + (175 + Math.round(70 * p.l)) + ", 90, " + (p.l * 0.9) + ")";
-      c.lineWidth = 0.9;
+      c.strokeStyle = "rgba(255, " + (185 + Math.round(60 * p.l)) + ", 100, " + p.l + ")";
+      c.lineWidth = 1.2;
       c.beginPath();
-      c.moveTo(p.x - p.vx * 1.8, p.y - p.vy * 1.8);
+      c.moveTo(p.x - p.vx * 2.6, p.y - p.vy * 2.6);
       c.lineTo(p.x, p.y);
       c.stroke();
     }

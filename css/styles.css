@@ -273,17 +273,17 @@ ul, ol { list-style: none; }
    -------------------------------------------------------------------------- */
 .weldline {
   position: relative;
-  height: clamp(80px, 12vh, 120px);
+  height: clamp(64px, 9vh, 92px);
   overflow: hidden;
   background:
-    linear-gradient(180deg, var(--noir) 0%, rgba(12, 12, 14, 0.25) 26%, rgba(12, 12, 14, 0.25) 74%, var(--noir) 100%),
+    linear-gradient(180deg, var(--noir) 0%, rgba(12, 12, 14, 0.55) 30%, rgba(12, 12, 14, 0.55) 70%, var(--noir) 100%),
     url("../assets/texture-acier.jpg") center / cover no-repeat;
 }
-/* upper plate slightly lighter than lower: two distinct pieces of steel */
+/* upper plate barely lighter than lower: two pieces of steel, machined flush */
 .weldline::before {
   content: "";
   position: absolute; inset: 0 0 50% 0;
-  background: rgba(236, 234, 230, 0.035);
+  background: rgba(236, 234, 230, 0.022);
   pointer-events: none;
 }
 /* static seam fallback (pre-JS / reduced motion) */
@@ -291,8 +291,8 @@ ul, ol { list-style: none; }
   content: "";
   position: absolute; left: 0; right: 0; top: 50%;
   height: 1px;
-  background: linear-gradient(90deg, rgba(255, 122, 26, 0.45), rgba(255, 179, 71, 0.3) 55%, rgba(139, 143, 150, 0.3));
-  box-shadow: 0 0 10px rgba(255, 122, 26, 0.25);
+  background: linear-gradient(90deg, rgba(226, 229, 234, 0.4), rgba(255, 179, 71, 0.25) 55%, rgba(139, 143, 150, 0.25));
+  box-shadow: 0 0 8px rgba(255, 122, 26, 0.15);
 }
 .weldline.is-live::after { display: none; }
 .weldline canvas {

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lucien Candaux — Métallerie &amp; soudure de précision, Croy (VD)</title>
+  <meta name="description" content="Lucien Candaux, atelier de métallerie à Croy, Vaud. Barrières, portails, escaliers, garde-corps, meubles, créations sur mesure et réparations. Swiss made — précision, fiabilité, finitions impeccables.">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="apple-touch-icon" href="assets/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Loader -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader__mark">
+      <img class="loader__logo" src="assets/logo.png" alt="" width="120" height="120">
+      <span class="loader__name">LUCIEN&nbsp;CANDAUX</span>
+      <span class="loader__line"></span>
+      <span class="loader__sub">Métallerie &middot; <svg class="swissmark" viewBox="0 0 24 24" aria-hidden="true"><rect x="1.5" y="1.5" width="21" height="21" fill="none" stroke="currentColor" stroke-opacity="0.4"/><path fill="currentColor" d="M9.6 4.8h4.8v4.8h4.8v4.8h-4.8v4.8H9.6v-4.8H4.8V9.6h4.8z"/></svg>Swiss made</span>
+    </div>
+  </div>
+
+  <!-- Grain overlay -->
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- Header -->
+  <header class="header" id="header">
+    <a class="header__brand" href="#hero" aria-label="Lucien Candaux — accueil">
+      <img class="header__logo" src="assets/logo.png" alt="Logo LC" width="44" height="44">
+      <span class="header__brandtext">
+        <span class="header__name">LUCIEN&nbsp;CANDAUX</span>
+        <span class="header__craft">Métallerie &middot; Croy VD</span>
+      </span>
+    </a>
+    <nav class="header__nav" aria-label="Navigation principale">
+      <a href="#savoir-faire">Savoir-faire</a>
+      <a href="#realisations">Réalisations</a>
+      <a href="#atelier">L'Atelier</a>
+      <a href="#processus">Processus</a>
+      <a href="#contact" class="header__cta">Demander un devis</a>
+    </nav>
+    <button class="header__burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </header>
+
+  <!-- Mobile menu -->
+  <div class="mobilemenu" id="mobilemenu" aria-hidden="true">
+    <nav>
+      <a href="#savoir-faire">Savoir-faire</a>
+      <a href="#realisations">Réalisations</a>
+      <a href="#atelier">L'Atelier</a>
+      <a href="#processus">Processus</a>
+      <a href="#contact">Demander un devis</a>
+    </nav>
+  </div>
+
+  <main id="main">
+
+    <!-- ============ 1. HERO ============ -->
+    <section class="hero frame" id="hero">
+      <video class="hero__video" autoplay muted loop playsinline preload="auto" poster="assets/texture-acier.jpg">
+        <source src="assets/hero.mp4" type="video/mp4">
+      </video>
+      <div class="hero__shade" aria-hidden="true"></div>
+      <canvas class="hero__sparks" id="sparks-hero" aria-hidden="true"></canvas>
+      <div class="hero__content">
+        <p class="hero__kicker">Atelier de métallerie — Croy &middot; Vaud &middot; Suisse</p>
+        <h1 class="hero__title metallic">LUCIEN<br>CANDAUX</h1>
+        <p class="hero__tagline">Métallerie &amp; soudure de précision</p>
+        <p class="hero__accent"><svg class="swissmark" viewBox="0 0 24 24" aria-hidden="true"><rect x="1.5" y="1.5" width="21" height="21" fill="none" stroke="currentColor" stroke-opacity="0.4"/><path fill="currentColor" d="M9.6 4.8h4.8v4.8h4.8v4.8h-4.8v4.8H9.6v-4.8H4.8V9.6h4.8z"/></svg>Swiss made — Barrières &middot; Escaliers &middot; Meubles &middot; Créations &middot; Réparations</p>
+      </div>
+      <a class="hero__scrollcue" href="#manifeste" aria-label="Faire défiler">
+        <span class="hero__scrolltext">Découvrir</span>
+        <span class="hero__scrollline"></span>
+      </a>
+    </section>
+
+    <!-- ============ 2. MANIFESTE ============ -->
+    <section class="manifeste frame" id="manifeste">
+      <div class="manifeste__bg" aria-hidden="true"></div>
+      <div class="manifeste__inner">
+        <p class="manifeste__statement" id="statement">
+          La précision n'est pas un détail. Chaque cote est vérifiée, chaque
+          soudure est propre, chaque chantier est livré à l'heure. C'est notre
+          façon de travailler le métal — sans compromis.
+        </p>
+        <p class="manifeste__sign">— Lucien Candaux, métallier-soudeur</p>
+      </div>
+    </section>
+
+    <!-- ============ 3. SAVOIR-FAIRE ============ -->
+    <section class="services" id="savoir-faire">
+      <div class="section-head">
+        <p class="section-head__kicker">Nos savoir-faire</p>
+        <h2 class="section-head__title metallic">Six métiers, une exigence</h2>
+        <span class="hotline" aria-hidden="true"></span>
+      </div>
+
+      <div class="services__list">
+        <article class="service" data-reveal>
+          <div class="service__media"><img src="assets/portail.jpg" alt="Portail coulissant moderne en acier anthracite" loading="lazy"></div>
+          <div class="service__body">
+            <span class="service__num">01</span>
+            <h3 class="service__title">Barrières &amp; Portails</h3>
+            <p class="service__text">Barrières, portails battants ou coulissants et grilles en acier ou aluminium. Fabrication sur mesure à l'atelier, motorisation possible et pose comprise : des entrées sobres, solides et durables.</p>
+          </div>
+        </article>
+
+        <article class="service" data-reveal>
+          <div class="service__media"><img src="assets/escalier.jpg" alt="Escalier hélicoïdal en acier et chêne" loading="lazy"></div>
+          <div class="service__body">
+            <span class="service__num">02</span>
+            <h3 class="service__title">Escaliers métalliques</h3>
+            <p class="service__text">Escaliers droits, hélicoïdaux ou suspendus, en acier brut, thermolaqué ou marié au bois. Calculés au millimètre, conformes aux normes et montés proprement, sans mauvaise surprise.</p>
+          </div>
+        </article>
+
+        <article class="service" data-reveal>
+          <div class="service__media"><img src="assets/garde-corps.jpg" alt="Garde-corps métallique sur un escalier en pierre" loading="lazy"></div>
+          <div class="service__body">
+            <span class="service__num">03</span>
+            <h3 class="service__title">Garde-corps &amp; Rampes</h3>
+            <p class="service__text">Garde-corps, rampes et mains courantes qui conjuguent sécurité et élégance, conformes aux normes en vigueur. Du trait contemporain au dessin plus classique, intérieur comme extérieur.</p>
+          </div>
+        </article>
+
+        <article class="service" data-reveal>
+          <div class="service__media"><img src="assets/meuble.jpg" alt="Console en acier noirci et noyer massif" loading="lazy"></div>
+          <div class="service__body">
+            <span class="service__num">04</span>
+            <h3 class="service__title">Meubles métalliques</h3>
+            <p class="service__text">Tables, consoles, étagères et agencements en acier marié au bois massif. Des pièces uniques dessinées avec vous, soudées et finies à l'atelier — du mobilier qui se transmet.</p>
+          </div>
+        </article>
+
+        <article class="service" data-reveal>
+          <div class="service__media"><img src="assets/soudeur.jpg" alt="Soudeur au travail dans l'atelier, gerbe d'étincelles" loading="lazy"></div>
+          <div class="service__body">
+            <span class="service__num">05</span>
+            <h3 class="service__title">Créations sur mesure</h3>
+            <p class="service__text">Une idée, un croquis, un besoin particulier ? Soudure TIG et MIG sur acier, inox et aluminium : structures, mezzanines, pergolas, pièces uniques. Si c'est en métal, c'est possible.</p>
+          </div>
+        </article>
+
+        <article class="service" data-reveal>
+          <div class="service__media"><img src="assets/restauration.jpg" alt="Remise en état d'une grille métallique à l'atelier" loading="lazy"></div>
+          <div class="service__body">
+            <span class="service__num">06</span>
+            <h3 class="service__title">Réparations &amp; Entretien</h3>
+            <p class="service__text">Remise en état de barrières, portails, escaliers et structures existantes : renforcement, redressage, traitement anticorrosion, réglages et motorisation. Intervention rapide et soignée.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ 4. RÉALISATIONS ============ -->
+    <section class="gallery" id="realisations">
+      <div class="gallery__pin" id="gallery-pin">
+        <div class="section-head section-head--overlay">
+          <p class="section-head__kicker">Réalisations</p>
+          <h2 class="section-head__title metallic">L'œuvre parle d'elle-même</h2>
+          <span class="hotline" aria-hidden="true"></span>
+        </div>
+        <div class="gallery__track" id="gallery-track">
+          <figure class="gallery__item">
+            <img src="assets/portail.jpg" alt="Portail coulissant moderne en acier anthracite" loading="lazy">
+            <figcaption><span>Portail coulissant</span>Acier thermolaqué — Croy</figcaption>
+          </figure>
+          <figure class="gallery__item">
+            <img src="assets/escalier.jpg" alt="Escalier hélicoïdal acier et chêne" loading="lazy">
+            <figcaption><span>Escalier hélicoïdal</span>Acier noirci &amp; chêne — Lausanne</figcaption>
+          </figure>
+          <figure class="gallery__item">
+            <img src="assets/structure.jpg" alt="Mezzanine acier dans un loft contemporain" loading="lazy">
+            <figcaption><span>Mezzanine acier</span>Structure &amp; escalier — Yverdon-les-Bains</figcaption>
+          </figure>
+          <figure class="gallery__item">
+            <img src="assets/meuble.jpg" alt="Console en acier noirci et noyer massif" loading="lazy">
+            <figcaption><span>Console « Jura »</span>Acier &amp; noyer — Pièce unique</figcaption>
+          </figure>
+          <figure class="gallery__item">
+            <img src="assets/garde-corps.jpg" alt="Garde-corps métallique d'un escalier de pierre" loading="lazy">
+            <figcaption><span>Garde-corps sur mesure</span>Rénovation — Romainmôtier</figcaption>
+          </figure>
+          <figure class="gallery__item">
+            <img src="assets/cloture.jpg" alt="Barrière en acier dans un jardin" loading="lazy">
+            <figcaption><span>Barrière de parc</span>Acier galvanisé — Vallée de Joux</figcaption>
+          </figure>
+          <figure class="gallery__item">
+            <img src="assets/soudure.jpg" alt="Cordon de soudure TIG aux reflets bleutés" loading="lazy">
+            <figcaption><span>Soudure TIG</span>Finition d'atelier — Inox</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 5. L'ATELIER ============ -->
+    <section class="atelier frame" id="atelier">
+      <video class="atelier__video" autoplay muted loop playsinline preload="metadata" poster="assets/texture-acier.jpg">
+        <source src="assets/atelier.mp4" type="video/mp4">
+      </video>
+      <div class="atelier__shade" aria-hidden="true"></div>
+      <div class="atelier__inner">
+        <div class="atelier__portrait" data-reveal>
+          <img src="assets/portrait.jpg" alt="Lucien Candaux dans son atelier de forge" loading="lazy">
+        </div>
+        <div class="atelier__story" data-reveal>
+          <p class="section-head__kicker">L'Atelier</p>
+          <h2 class="section-head__title metallic">Un atelier moderne,<br>un œil d'artisan</h2>
+          <span class="hotline" aria-hidden="true"></span>
+          <p>Métallier de la nouvelle génération, Lucien Candaux a appris le métier au plus
+          près de la matière&nbsp;: formation suisse exigeante, des années d'atelier et de
+          chantier, et une exigence de finition qui ne se négocie pas. Jeune, oui — mais
+          le cordon de soudure parle pour lui.</p>
+          <p>Tout est pensé, fabriqué et posé depuis l'atelier de Croy, au pied du Jura
+          vaudois&nbsp;: découpe, pliage, soudure TIG et MIG, finition. Chaque projet part
+          de cotes exactes, d'un dessin validé ensemble, et se termine par une pose
+          soignée, dans les délais annoncés. Swiss made, sans compromis.</p>
+          <p class="atelier__values"><span><svg class="swissmark" viewBox="0 0 24 24" aria-hidden="true"><rect x="1.5" y="1.5" width="21" height="21" fill="none" stroke="currentColor" stroke-opacity="0.4"/><path fill="currentColor" d="M9.6 4.8h4.8v4.8h4.8v4.8h-4.8v4.8H9.6v-4.8H4.8V9.6h4.8z"/></svg>Swiss&nbsp;made</span><i>·</i><span>Précision</span><i>·</i><span>Passion</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 6. PROCESSUS ============ -->
+    <section class="process" id="processus">
+      <div class="section-head">
+        <p class="section-head__kicker">Processus</p>
+        <h2 class="section-head__title metallic">Du relevé de cotes<br>à la pose finale</h2>
+        <span class="hotline" aria-hidden="true"></span>
+      </div>
+      <ol class="process__steps">
+        <li class="process__step" data-reveal>
+          <span class="process__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><rect x="2.5" y="9" width="19" height="6.5" rx="1"/><path d="M6.5 9v3.2M10.5 9v2.2M14.5 9v3.2M18.5 9v2.2"/></svg>
+            <i>01</i>
+          </span>
+          <h3>Visite &amp; relevé</h3>
+          <p>Visite sur site, prise de cotes précise et échange sur vos besoins, votre bâti et vos contraintes.</p>
+        </li>
+        <li class="process__step" data-reveal>
+          <span class="process__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M5.5 3.5h9L19 8v12.5H5.5z"/><path d="M14.5 3.5V8H19"/><path d="M9 13.5h6M9 17h3.5"/></svg>
+            <i>02</i>
+          </span>
+          <h3>Plans &amp; devis</h3>
+          <p>Plans détaillés, choix des matières et finitions, devis transparent et engagement de délai.</p>
+        </li>
+        <li class="process__step" data-reveal>
+          <span class="process__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M3.5 20.5l6-6"/><path d="M9.5 14.5l3-3 2.5 2.5-3 3z"/><path d="M16.5 7.5l1.6-1.6M18 11h2.5M13.5 5.5V3M20 4l-1.4 1.4"/></svg>
+            <i>03</i>
+          </span>
+          <h3>Fabrication à l'atelier</h3>
+          <p>Découpe, pliage, soudure, finition : chaque pièce est fabriquée avec précision dans notre atelier de Croy.</p>
+        </li>
+        <li class="process__step" data-reveal>
+          <span class="process__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 2.8l7 4.1v8.2l-7 4.1-7-4.1V6.9z"/><circle cx="12" cy="11" r="3.2"/></svg>
+            <i>04</i>
+          </span>
+          <h3>Pose &amp; finitions</h3>
+          <p>Installation soignée par nos soins, réglages fins et garantie sur l'ouvrage posé.</p>
+        </li>
+      </ol>
+      <div class="process__cartouche" data-reveal aria-hidden="true">
+        <span class="process__cartouche-cell"><b>Plan d'exécution</b>N° LC-2026-01</span>
+        <span class="process__cartouche-cell"><b>Atelier</b>Lucien Candaux — Métallerie</span>
+        <span class="process__cartouche-cell"><b>Lieu</b>1322 Croy · VD</span>
+        <span class="process__cartouche-cell"><b>Échelle</b><span class="cartouche-swiss">1:1 — <svg class="swissmark" viewBox="0 0 24 24" aria-hidden="true"><rect x="1.5" y="1.5" width="21" height="21" fill="none" stroke="currentColor" stroke-opacity="0.4"/><path fill="currentColor" d="M9.6 4.8h4.8v4.8h4.8v4.8h-4.8v4.8H9.6v-4.8H4.8V9.6h4.8z"/></svg>Swiss made</span></span>
+      </div>
+    </section>
+
+    <!-- ============ 7. CONTACT ============ -->
+    <section class="contact" id="contact">
+      <div class="contact__inner">
+        <div class="contact__intro" data-reveal>
+          <p class="section-head__kicker">Contact</p>
+          <h2 class="section-head__title metallic">Parlons de votre projet</h2>
+          <span class="hotline" aria-hidden="true"></span>
+          <p class="contact__lead">Une barrière, un escalier, un meuble, une réparation ou une pièce unique&nbsp;?
+          Décrivez votre projet&nbsp;: nous revenons vers vous sous 48&nbsp;heures avec un premier avis et un chiffrage clair.</p>
+          <ul class="contact__infos">
+            <li><span>Atelier</span>Route de la Gare&nbsp;4, 1322 Croy — Vaud, Suisse</li>
+            <li><span>Téléphone</span><a href="tel:+41210000000">+41&nbsp;21&nbsp;000&nbsp;00&nbsp;00</a></li>
+            <li><span>Email</span><a href="mailto:contact@luciencandaux.ch">contact@luciencandaux.ch</a></li>
+            <li><span>Horaires</span>Lun – Ven · 7h30 – 17h30, sur rendez-vous</li>
+          </ul>
+        </div>
+        <form class="contact__form" data-reveal action="mailto:contact@luciencandaux.ch" method="post" enctype="text/plain">
+          <div class="field">
+            <label for="f-nom">Nom</label>
+            <input id="f-nom" name="nom" type="text" required autocomplete="name" placeholder="Votre nom">
+          </div>
+          <div class="field">
+            <label for="f-email">Email</label>
+            <input id="f-email" name="email" type="email" required autocomplete="email" placeholder="vous@exemple.ch">
+          </div>
+          <div class="field">
+            <label for="f-projet">Type de projet</label>
+            <select id="f-projet" name="projet">
+              <option>Barrière / Portail</option>
+              <option>Escalier</option>
+              <option>Garde-corps / Rampe</option>
+              <option>Meuble métallique</option>
+              <option>Création sur mesure</option>
+              <option>Réparation / Entretien</option>
+              <option>Autre</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-message">Votre projet</label>
+            <textarea id="f-message" name="message" rows="5" required placeholder="Décrivez votre projet, vos dimensions, vos envies…"></textarea>
+          </div>
+          <button class="btn-forge" type="submit" id="btn-devis">
+            <span>Demander un devis</span>
+            <canvas class="btn-forge__sparks" aria-hidden="true"></canvas>
+          </button>
+        </form>
+      </div>
+
+      <footer class="footer">
+        <img class="footer__logo" src="assets/logo.png" alt="" width="56" height="56" loading="lazy">
+        <span class="footer__name">LUCIEN&nbsp;CANDAUX</span>
+        <span class="footer__line"></span>
+        <p class="footer__legal">Métallerie &amp; soudure de précision — 1322 Croy, Vaud — Suisse ·
+        <span class="swiss-inline"><svg class="swissmark" viewBox="0 0 24 24" aria-hidden="true"><rect x="1.5" y="1.5" width="21" height="21" fill="none" stroke="currentColor" stroke-opacity="0.4"/><path fill="currentColor" d="M9.6 4.8h4.8v4.8h4.8v4.8h-4.8v4.8H9.6v-4.8H4.8V9.6h4.8z"/></svg>Swiss made</span><br>
+        © 2026 Lucien Candaux. Tous droits réservés.</p>
+      </footer>
+    </section>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+  <script src="js/sparks.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

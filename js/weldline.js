@@ -70,7 +70,7 @@
   };
 
   WeldLine.prototype.resize = function () {
-    var r = this.el.getBoundingClientRect();
+    var r = this.canvas.getBoundingClientRect();
     this.w = Math.max(r.width, 1);
     this.h = Math.max(r.height, 1);
     this.canvas.width = this.w * this.dpr;

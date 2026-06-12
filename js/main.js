@@ -180,6 +180,20 @@
     });
   }
 
+  // Weld seam dividers: torch progress follows the scroll
+  document.querySelectorAll("[data-weldline]").forEach(function (el) {
+    if (!window.WeldLine) return;
+    var wl = new WeldLine(el);
+    ScrollTrigger.create({
+      trigger: el,
+      start: "top 92%",
+      end: "bottom 18%",
+      scrub: true,
+      onUpdate: function (self) { wl.setProgress(self.progress); },
+      onRefresh: function (self) { wl.setProgress(self.progress); }
+    });
+  });
+
   // Atelier portrait slight parallax
   gsap.fromTo(".atelier__portrait", { y: 50 }, {
     y: -50,

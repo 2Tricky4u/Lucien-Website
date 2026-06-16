@@ -21,7 +21,7 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; max-width: 100%; }
 html.lenis { height: auto; scroll-behavior: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto; }
 
@@ -267,6 +267,23 @@ ul, ol { list-style: none; }
   letter-spacing: 0.25em;
   color: var(--acier-clair);
 }
+/* same bordered ember CTA as the desktop header, sized for the mobile menu
+   (a.mobilemenu__cta to outrank the `.mobilemenu a` color rule) */
+.mobilemenu a.mobilemenu__cta {
+  margin-top: 0.6rem;
+  padding: 0.7rem 1.7rem;
+  border: 1px solid rgba(255, 122, 26, 0.5);
+  color: var(--or-fondu);
+  font-size: 1.1rem;
+  letter-spacing: 0.22em;
+  transition: background 0.35s, color 0.35s, box-shadow 0.35s;
+}
+.mobilemenu a.mobilemenu__cta:hover,
+.mobilemenu a.mobilemenu__cta:active {
+  background: var(--braise);
+  color: var(--noir);
+  box-shadow: 0 0 24px rgba(255, 122, 26, 0.45);
+}
 
 /* --------------------------------------------------------------------------
    Weld seam divider — two steel plates joined live as you scroll
@@ -372,7 +389,9 @@ ul, ol { list-style: none; }
   letter-spacing: 0.45em;
   text-transform: uppercase;
   color: var(--acier);
+  transition: color 0.35s;
 }
+.hero__scrollcue:hover .hero__scrolltext { color: var(--or-fondu); }
 .hero__scrollline {
   width: 1px; height: 56px;
   background: linear-gradient(180deg, var(--braise), transparent);
@@ -583,7 +602,7 @@ ul, ol { list-style: none; }
 .atelier__story .section-head__title { margin-top: 0.9rem; }
 .atelier__story .hotline { margin-bottom: 1.4rem; }
 .atelier__values {
-  display: flex; gap: 1rem; align-items: center;
+  display: flex; flex-wrap: wrap; gap: 0.55rem 1rem; align-items: center;
   margin-top: 2.4rem !important;
   font-family: var(--font-display);
   font-size: 0.86rem;
@@ -872,19 +891,40 @@ ul, ol { list-style: none; }
   .atelier__portrait { max-width: 320px; }
 
   .process__steps { grid-template-columns: 1fr 1fr; }
+  /* the horizontal weld bead only makes sense behind a single row of cards */
+  .process__steps::before { display: none; }
 
   .contact__inner { grid-template-columns: 1fr; padding-top: 7rem; }
 }
 
 @media (max-width: 560px) {
   .process__steps { grid-template-columns: 1fr; }
-  .process__steps::before { display: none; }
   .process__cartouche { margin-left: var(--pad-x); width: auto; flex-direction: column; }
   .process__cartouche-cell { border-right: 0; border-bottom: 1px solid rgba(139, 143, 150, 0.3); }
   .process__cartouche-cell:last-child { border-bottom: 0; }
   .section-head { padding-top: 6.5rem; padding-bottom: 3rem; }
   .gallery__item { width: 78vw; }
   .hero__title { letter-spacing: 0.1em; text-indent: 0.1em; }
+
+  /* tighten the values row so "Swiss made · Précision · Passion" stays aligned */
+  .atelier__values { font-size: 0.74rem; letter-spacing: 0.18em; gap: 0.45rem 0.7rem; }
+
+  /* keep the grinder-spark canvas inside the viewport (no right-edge gutter) */
+  .btn-forge__sparks {
+    inset: -60px -20px;
+    width: calc(100% + 40px);
+    height: calc(100% + 120px);
+  }
+}
+
+/* small phones: scale the brand block so it never clips against the burger */
+@media (max-width: 480px) {
+  .header { padding-left: 1.1rem; padding-right: 1.1rem; }
+  .header__brand { gap: 0.6rem; }
+  .header__logo,
+  .header.is-scrolled .header__logo { width: 34px; height: 34px; }
+  .header__name { font-size: 0.82rem; letter-spacing: 0.16em; }
+  .header__craft { font-size: 0.52rem; letter-spacing: 0.26em; }
 }
 
 /* --------------------------------------------------------------------------
